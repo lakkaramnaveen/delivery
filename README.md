@@ -62,8 +62,8 @@ delivery-cost-tracker/
 
 ```bash
 # Clone repo
-git clone https://github.com/lakkaramnaveen/delivery-cost-tracker.git
-cd delivery-cost-tracker/backend
+git clone https://github.com/lakkaramnaveen/delivery
+cd delivery/backend
 
 # Create virtual environment
 python -m venv venv
@@ -165,4 +165,4 @@ Licensed under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-Made with ❤️ by [Your Name](https://github.com/lakkaramnaveen)
+Made with ❤️ by [Naveen](https://github.com/lakkaramnaveen)
