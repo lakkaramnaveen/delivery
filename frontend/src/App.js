@@ -58,6 +58,20 @@ function App() {
     e.preventDefault();
     setMessage("");
 
+    const start = new Date(formData.start_time);
+    const end = new Date(formData.end_time);
+    const durationHours = (end - start) / (1000 * 60 * 60);
+
+    if (end <= start) {
+      setMessage("❌ End time must be after start time.");
+      return;
+    }
+
+    if (durationHours <= 0 || durationHours > 3) {
+      setMessage("❌ Delivery must be between 0 and 3 hours.");
+      return;
+    }
+
     const payload = {
       driver_id: Number(formData.driver_id),
       start_time: formData.start_time,
@@ -72,20 +86,22 @@ function App() {
         body: JSON.stringify(payload)
       });
 
+      const resData = await res.json();
+
       if (res.ok) {
         setMessage("✅ Delivery added!");
         setFormData({ driver_id: "", start_time: "", end_time: "", hourly_rate: "" });
         fetchDeliveries();
         fetchTotalCost();
       } else {
-        const errData = await res.json();
-        setMessage(`❌ Failed to add delivery: ${errData.message || "Unknown error"}`);
+        setMessage(`❌ Failed to add delivery: ${resData.error || "Unknown error"}`);
       }
     } catch (err) {
       console.error("Submission error:", err);
       setMessage("❌ Error adding delivery. Please try again.");
     }
   };
+
 
   return (
     <div style={styles.container}>

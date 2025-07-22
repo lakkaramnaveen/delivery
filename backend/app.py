@@ -40,10 +40,15 @@ def add_delivery():
         if not all(field in data for field in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
 
+        # Replace direct datetime parsing and validation with helper
+        start_time, end_time, duration_hours = calculate_duration_and_validate(
+            data["start_time"], data["end_time"]
+        )
+
         delivery = Delivery(
             driver_id=int(data["driver_id"]),
-            start_time=datetime.fromisoformat(data["start_time"]),
-            end_time=datetime.fromisoformat(data["end_time"]),
+            start_time=start_time,
+            end_time=end_time,
             hourly_rate=float(data["hourly_rate"]),
         )
 
